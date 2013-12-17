@@ -1,3 +1,5 @@
+
+
 midi = readmidi('jesu.mid')
 
 %----- converting MIDI to audio ----------
@@ -47,6 +49,7 @@ axis xy;
 xlabel('time (sec)');
 ylabel('note number');
 
+%{
 %------------------------------------------------------------
 
 % initialize matrix:
@@ -61,25 +64,9 @@ M(:,5) = (.5:.5:6.5)';  % note on:  notes start every .5 seconds
 M(:,6) = M(:,5) + .5;   % note off: each note has duration .5 seconds
 
 midi_new = matrix2midi(M);
-writemidi(midi_new, 'testout.mid');
+writemidi(midi_new, '/home/hooshuu/Documents/MATLAB/matlab-midi/tests/midi/testout.mid');
 
 %------------------------------------------------------------
+%}
 
-% initialize matrix:
-N = 200;
-M = zeros(N,6);
-
-M(:,1) = 1;         % all in track 1
-M(:,2) = 1;         % all in channel 1
-
-M(:,3) = 30 + round(60*rand(N,1));  % random note numbers
-
-M(:,4) = 60 + round(40*rand(N,1));  % random volumes
-
-M(:,5) = 10 * rand(N,1);
-%M(:,6) = M(:,5) + .2 + 2 * rand(N,1);
-M(:,6) = M(:,5) + .2;
-
-midi_new = matrix2midi(M);
-writemidi(midi_new, 'testout2.mid');
 

@@ -26,7 +26,7 @@ if nargin < 2
 end
 
 if nargin < 3
-  timesig = [4,2,24,8];
+  timesig = [4,4,24,8];
 end
 
 tracks = unique(M(:,1));
