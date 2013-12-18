@@ -21,7 +21,8 @@ duration=0;
 inDuration = 0;   % 0 = false 1= true
 totalTimes = 0;
 nodeNow = 0;      % 0 = false 1= true
-firstNodeTime = 0.5;
+firstNodeTime = 0.125;
+
 
 for i = 1 : 20 
     for j = 1 : 16 
@@ -29,52 +30,58 @@ for i = 1 : 20
         
         if (mainMelody(i,j) == -2)
             
-            duration = duration + 0.5;
+            duration = duration + 0.125;
              
         elseif (mainMelody(i,j) == -1 )
-        
+             
             if(countNodePrev~=0)
-            M(countNodePrev,1) = 1;         % all in track 1
-            M(countNodePrev,2) = 1;         % all in channel 1
+            
             
                 if(mainMelodyPrev ~= -1)
-                    M(countNodePrev,3) = mainMelodyPrev+80;
+                    M(countNodePrev,1) = 1;         % all in track 1
+                    M(countNodePrev,2) = 1;         % all in channel 1
+                    M(countNodePrev,3) = mainMelodyPrev+60;
+                    M(countNodePrev,4) = 78;
+                    M(countNodePrev,5) = totalTimes;  % note on:  notes start every .5 seconds
+                    M(countNodePrev,6) = M(countNodePrev,5) + duration + firstNodeTime;   % note off: each note has duration .5 seconds
+  
+                    countNode = countNode+1; 
+                    
                 else
-                    M(countNodePrev,3) = 0;
+                    %M(countNodePrev,3) = 0;
                 end
             
-            M(countNodePrev,4) = 78;
-            M(countNodePrev,5) = totalTimes;  % note on:  notes start every .5 seconds
-            M(countNodePrev,6) = M(countNodePrev,5) + duration + firstNodeTime;   % note off: each note has duration .5 seconds
-            
+              
             totalTimes=totalTimes+duration+firstNodeTime;
-            countNode = countNode+1; 
+            
             end
             
-            mainMelodyPrev = -1;
             countNodePrev = countNode;
-            
+            mainMelodyPrev = -1;
             duration = 0;
        
         elseif(mainMelody(i,j) ~= -2 && mainMelody(i,j) ~= -1)
             
             if(countNodePrev~=0)
                         
-            M(countNodePrev,1) = 1;         % all in track 1
-            M(countNodePrev,2) = 1;         % all in channel 1
+            
             
                 if(mainMelodyPrev ~= -1)
-                        M(countNodePrev,3) = mainMelodyPrev+80;
+                        M(countNodePrev,1) = 1;         % all in track 1
+                        M(countNodePrev,2) = 1;         % all in channel 1
+                        M(countNodePrev,3) = mainMelodyPrev+60;
+                        M(countNodePrev,4) = 78;
+                        M(countNodePrev,5) = totalTimes;  % note on:  notes start every .5 seconds    
+                        M(countNodePrev,6) = M(countNodePrev,5) + duration + firstNodeTime;   % note off: each note has duration .5 seconds  
+                        
+                        countNode = countNode + 1; 
                     else
-                        M(countNodePrev,3) = 0;    
+                        %M(countNodePrev,3) = 0;    
                 end 
                 
-            M(countNodePrev,4) = 78;
-            M(countNodePrev,5) = totalTimes;  % note on:  notes start every .5 seconds    
-            M(countNodePrev,6) = M(countNodePrev,5) + duration + firstNodeTime;   % note off: each note has duration .5 seconds  
-           
+            
             totalTimes = totalTimes + duration + firstNodeTime;
-            countNode = countNode + 1; 
+            
             end
             
             mainMelodyPrev = mainMelody(i,j);
